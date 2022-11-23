@@ -4,12 +4,12 @@ import { cors } from 'common/cors';
 import { AppModule } from './modules/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule);
 
-  app.enableCors(cors);
+    app.enableCors(cors);
 
-  const config = app.get(ConfigService);
+    const config = app.get(ConfigService);
 
-  await app.listen(config.get('PORT', 8080));
+    await app.listen(config.get('PORT', 8080));
 }
 bootstrap();
