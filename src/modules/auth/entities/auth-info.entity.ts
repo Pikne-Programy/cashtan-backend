@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from 'modules/user/entities/user.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class AuthInfoEntity {
@@ -8,6 +9,15 @@ export class AuthInfoEntity {
     @Column()
     password: string;
 
-    @Column()
-    token: string;
+    @Column({
+        unique: true,
+        nullable: true,
+    })
+    token?: string | null;
+
+    @OneToOne(() => UserEntity, {
+        cascade: true,
+        nullable: false,
+    })
+    user: UserEntity;
 }

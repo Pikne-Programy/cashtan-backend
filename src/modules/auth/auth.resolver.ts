@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from 'common/consts';
 import { Auth } from 'common/current-user.decorator';
@@ -6,7 +5,6 @@ import { AuthService } from './auth.service';
 import { AuthCredentialsInput } from './dto/auth-credentials.input';
 import { RegisterInput } from './dto/register.input';
 import { AuthPayload } from './entities/auth.entity';
-import { AuthGuard } from './guards/auth.guard';
 
 @Resolver(() => AuthPayload)
 export class AuthResolver {
@@ -26,17 +24,14 @@ export class AuthResolver {
         return this.authService.login(credentials);
     }
 
-    // there is no void in GQL
     @Mutation(() => Boolean)
-    @UseGuards(AuthGuard)
     async logout(@Auth() currentUser: CurrentUser) {
-        await this.authService.logout(currentUser.id);
+        await this.authService.logout(currentUser);
 
         return true;
     }
 
     @Mutation(() => AuthPayload)
-    @UseGuards(AuthGuard)
     changePassword(
         @Auth() currentUser: CurrentUser,
         @Args('newPassword') password: string,

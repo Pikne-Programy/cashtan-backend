@@ -7,5 +7,6 @@ import { AuthInfoEntity } from './entities/auth-info.entity';
 @Module({
     imports: [TypeOrmModule.forFeature([AuthInfoEntity])],
     providers: [AuthResolver, AuthService],
+    exports: [AuthService],
 })
 export class AuthModule {}

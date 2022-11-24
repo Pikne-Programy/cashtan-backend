@@ -2,7 +2,7 @@ import { InputType } from '@nestjs/graphql';
 
 @InputType()
 export class AuthCredentialsInput {
-    username: number;
+    username: string;
 
-    password: number;
+    password: string;
 }

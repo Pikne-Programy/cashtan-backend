@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
@@ -10,5 +10,6 @@ export class UserEntity {
 
     name: string;
 
+    @HideField() //TODO show only own
     email: string;
 }

@@ -1,23 +1,23 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CurrentUser } from 'common/consts';
+import { Auth } from 'common/current-user.decorator';
+import { UpdateUserInput } from './dto/update-user.input';
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
-//TODO
 @Resolver(() => UserEntity)
 export class UserResolver {
     constructor(private readonly userService: UserService) {}
 
-    @Query(() => [UserEntity], { name: 'user' })
-    findAll() {
-        return this.userService.findAll();
+    @Query(() => UserEntity, { name: 'user' })
+    findOne(@Args('id', { type: () => ID }) id: string): Promise<UserEntity> {
+        return this.userService.findOne(id);
     }
 
-    // @Query(() => UserEntity, { name: 'user' })
-    // findOne(@Args('id', { type: () => Int }) id: number) {
-    //     return this.userService.findOne(id);
-    // }
-
-    // @Mutation(() => UserEntity)
-    // updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    //     return this.userService.update(updateUserInput.id, updateUserInput);
-    // }
+    @Mutation(() => UserEntity)
+    userUpdate(
+        @Auth() currentUser: CurrentUser,
+        @Args('updateUserInput') updateUserInput: UpdateUserInput,
+    ): Promise<UserEntity> {
+        return this.userService.update(currentUser, updateUserInput);
+    }
 }
