@@ -24,7 +24,10 @@ export class AuthService {
         const { user, token } = await this.authInfoRepository.save({
             password: passwordHash,
             token: randomUUID(),
-            user: createAuthInput,
+            user: {
+                name: createAuthInput.username,
+                email: createAuthInput.email,
+            },
         });
 
         return { user, token };

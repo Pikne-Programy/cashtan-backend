@@ -1,5 +1,11 @@
 import { UserEntity } from 'modules/user/entities/user.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class AuthInfoEntity {
@@ -19,5 +25,6 @@ export class AuthInfoEntity {
         cascade: true,
         nullable: false,
     })
+    @JoinColumn()
     user: UserEntity;
 }

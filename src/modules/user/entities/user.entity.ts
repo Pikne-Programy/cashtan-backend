@@ -1,5 +1,5 @@
 import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -8,6 +8,7 @@ export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Column()
     name: string;
 
     @HideField() //TODO show only own
