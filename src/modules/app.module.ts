@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQlModuleConfig } from 'config/graphql.module.config';
 import { TypeOrmModuleConfig } from 'config/typeorm.module.config';
 import { AuthModule } from './auth/auth.module';
+import { BalanceModule } from './balance/balance.module';
+import { TransactionModule } from './transaction/transaction.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -20,6 +22,8 @@ import { UserModule } from './user/user.module';
         }),
         UserModule,
         AuthModule,
+        BalanceModule,
+        TransactionModule,
     ],
 })
 export class AppModule {}

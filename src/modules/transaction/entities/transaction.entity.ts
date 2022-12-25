@@ -1,30 +1,27 @@
-import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BalanceEntity } from 'modules/balance/entities/balance.entity';
 import {
     Column,
     Entity,
     JoinColumn,
-    OneToOne,
+    ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class UserEntity {
+export class TransactionEntity {
     @Field(() => ID)
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id: number;
 
     @Column()
-    name: string;
+    date: Date;
 
-    @HideField() //TODO show only own
-    email: string;
+    @Column()
+    amount: number;
 
-    @OneToOne(() => BalanceEntity, {
-        cascade: true,
-        nullable: false,
-    })
+    @ManyToOne(() => BalanceEntity, (balance) => balance.transactions)
     @JoinColumn()
     balance: BalanceEntity;
 }

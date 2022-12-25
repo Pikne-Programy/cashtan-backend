@@ -27,9 +27,13 @@ export class AuthService {
             user: {
                 name: createAuthInput.username,
                 email: createAuthInput.email,
+                balance: {
+                    amount: 0,
+                    transactions: [],
+                },
             },
+            relations: ['user', 'user.balance'],
         });
-
         return { user, token };
     }
 
@@ -48,9 +52,7 @@ export class AuthService {
                 password: true,
                 id: true,
             },
-            relations: {
-                user: true,
-            },
+            relations: ['user', 'user.balance'],
         });
 
         assert(await compare(password, passwordHash));
