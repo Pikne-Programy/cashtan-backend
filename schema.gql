@@ -1,0 +1,73 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TransactionEntity {
+  id: ID!
+  date: DateTime!
+  amount: Float!
+  balance: BalanceEntity!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type BalanceEntity {
+  id: ID!
+  amount: Float!
+  transactions: [TransactionEntity!]!
+}
+
+type UserEntity {
+  id: ID!
+  name: String!
+  balance: BalanceEntity!
+}
+
+type AuthPayload {
+  user: UserEntity!
+  token: String!
+}
+
+type Query {
+  user(id: ID!): UserEntity!
+  balance(id: ID!): BalanceEntity!
+  transaction(id: ID!): TransactionEntity!
+}
+
+type Mutation {
+  userUpdate(updateUserInput: UpdateUserInput!): UserEntity!
+  register(credentials: RegisterInput!): AuthPayload!
+  login(credentials: AuthCredentialsInput!): AuthPayload!
+  logout: Boolean!
+  changePassword(newPassword: String!): AuthPayload!
+  forgotPassword(username: String!): Boolean!
+  withdraw(amount: Int!): BalanceEntity!
+  deposit(amount: Int!): BalanceEntity!
+  create: BalanceEntity!
+  createTransaction(createTransactionInput: CreateTransactionInput!): TransactionEntity!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+}
+
+input RegisterInput {
+  username: String!
+  password: String!
+  email: String!
+}
+
+input AuthCredentialsInput {
+  username: String!
+  password: String!
+}
+
+input CreateTransactionInput {
+  date: DateTime!
+  amount: Float!
+  balanceId: String!
+}

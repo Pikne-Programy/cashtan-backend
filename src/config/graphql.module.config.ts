@@ -17,9 +17,8 @@ export class GraphQlModuleConfig implements GqlOptionsFactory {
             subscriptions: {
                 'graphql-ws': true,
             },
-            autoSchemaFile: true,
+            autoSchemaFile: 'schema.gql',
             transformAutoSchemaFile: true,
-
             context: ({ req }) => ({ req, startTime: Date.now() }),
         };
     }
