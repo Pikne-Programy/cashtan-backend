@@ -19,6 +19,10 @@ export class AuthGuard implements CanActivate {
         if (!req.currentUserPromise) {
             const token = req.header('Authorization')?.replace('Bearer ', '');
 
+            if (!token) {
+                return false;
+            }
+
             // prevents retrieving user more than once
             // can be called concurently
             req.currentUserPromise =
